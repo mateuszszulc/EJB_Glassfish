@@ -1,0 +1,39 @@
+
+<html>
+<head>
+  <title>EJB 3 In Action : Chapter 12 code examples </title>
+  <LINK href="blaf.css" type=text/css rel=stylesheet>
+</head>
+<body>
+  <h1>  EJB3 In Action: Chapter 12 Code examples </h1>
+
+  <h3>Enter Bid Details </h3>
+
+  <FORM ACTION="/chapter12/InsertServlet" METHOD="POST" >
+
+  <table>
+    <tr>
+      <td>ItemId:</td>
+      <td><INPUT TYPE="text" NAME="itemId" SIZE="4" MAXLENGTH="4"></td>
+    </tr>
+    <tr>
+      <td>UserId:</td>
+      <td><INPUT TYPE="text" NAME="userId" SIZE="11" MAXLENGTH="11"></td>
+    </tr>
+    <tr>
+      <td>BidPrice:</td>
+      <td><INPUT TYPE="text" NAME="bidPrice" SIZE="8" MAXLENGTH="11"></td>
+    </tr>
+    <tr>
+      <td colspan="*"/>
+    </tr>
+    <tr>
+      <td><INPUT TYPE="submit" VALUE="PlaceBid"></td>
+      <td><INPUT TYPE="reset" VALUE="Clear"></td>
+    </tr>
+  </table>
+  
+  </FORM>
+
+</body>
+</html>

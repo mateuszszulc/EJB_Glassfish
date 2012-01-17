@@ -1,0 +1,11 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+ <persistence-unit name="actionBazaar">
+<jta-data-source>jdbc/ActionBazaarDS</jta-data-source>
+<mapping-file>META-INF/secondORMap.xml</mapping-file>	
+<properties>
+      <property name = "toplink.ddl-generation"
+                value = "create-tables"/>  
+      <property name = "toplink.ddl-generation.output-mode" value = "database"/>                 
+    </properties>
+</persistence-unit>
+</persistence>

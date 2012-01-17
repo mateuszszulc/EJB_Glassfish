@@ -1,0 +1,2 @@
+Main-Class: ejb3inaction.example.HelloUserClient
+Class-path: ../build/chapter1/chapter1-ejb.jar

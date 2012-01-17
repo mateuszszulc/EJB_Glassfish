@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+ "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+
+ 
+<bean id="entityManager"
+  class="org.springframework.jndi.JndiObjectFactoryBean">
+    <property name="jndiName">
+	    <value>java:comp/env/actionBazaar</value>
+	</property>  
+     <property name="resourceRef">
+	    <value>true</value>  
+	  </property>  
+</bean> 
+
+ <bean id="bidService" class="actionbazaar.buslogic.BidServiceBean">
+    <property name="bidEAO">
+      <ref bean="bidEAO"/>
+    </property>
+    <property name="itemEAO">
+      <ref bean="itemEAO"/>
+    </property>
+  </bean>
+
+
+ <bean id="bidEAO"
+    class="actionbazaar.persistence.eao.BidSpringEAO"
+    autowire="byType">
+     <property name="entityManager" ref="entityManager"/>
+</bean>
+
+  <bean id="itemEAO"
+    class="actionbazaar.persistence.eao.ItemSpingEAO"
+    autowire="byType">
+   <property name="entityManager" ref="entityManager"/>
+</bean>
+
+</beans>

@@ -1,0 +1,16 @@
+package ejb3inaction.example.buslogic;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+
+public class PlaceBidClient {
+    public static void main(String [] args) {
+        try {
+            Context context = new InitialContext();
+            PlaceBid placeBid = (PlaceBid)context.lookup("java:comp/env/PlaceBid");
+            System.out.println("Bid Successful, BidId Received is:" +placeBid.addBid("dpanda",  Long.valueOf(100),  20000.50 ));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+   }

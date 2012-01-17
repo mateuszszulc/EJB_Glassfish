@@ -1,0 +1,122 @@
+A:link {
+	font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #000000;
+}
+
+A:active {
+	font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #000000;
+}
+A:visited {
+	font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #000000;
+}
+A.navigation:link {
+	font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #000000;
+}
+A.navigation:active {
+	font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #000000;
+}
+A.navigation:visited {
+	font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #000000;
+}
+BODY {
+font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #000000; text-decoration: none; visited: #000000;
+}
+P {
+font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #000000; text-decoration: none; visited: #000000;
+}
+LI {
+font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #000000; text-decoration: none; visited: #000000;
+}
+UL {
+font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #000000; text-decoration: none; visited: #000000;
+}
+OL {
+font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #000000; text-decoration: none; visited: #000000;
+}
+H1 {
+font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; color: #000000; text-decoration: none; visited: #000000;
+}
+
+H2 {
+font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: bold; color: #000000; text-decoration: none; visited: #000000;
+
+}
+
+H3 {
+font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; color: #666666; text-decoration: none; visited: #666666;
+}
+H4 {
+font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 14px; font-weight: bold; color: #000000 ; text-decoration: none; visited: #000000;
+}
+
+H5
+{
+font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 14px; font-weight: bold; color: #999999 ; text-decoration: none; visited: #999999;
+}
+
+.CODE {
+	FONT-FAMILY: "Courier New", "Courier", "monospace"
+}
+
+CODE.nocolor {
+	FONT-FAMILY: "Courier New", "Courier", "monospace"
+}
+P.indent {
+	TEXT-INDENT: 9%
+}
+TABLE.borders {
+	BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none
+}
+TR {
+	VERTICAL-ALIGN: top; TEXT-ALIGN: left
+}
+TH {
+	FONT-WEIGHT: bold; FONT-SIZE: 11pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+TD {
+	FONT-SIZE: 11pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+.mediumtext {
+	FONT-SIZE: 80%
+}
+.smalltext {
+	FONT-SIZE: 75%
+}
+.tinytext {
+	FONT-SIZE: 70%
+}
+P.RelatedTopics {
+	DISPLAY: block; FONT-WEIGHT: bold; FONT-SIZE: 125%; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #ffffcc
+}
+P.note {
+	DISPLAY: block; FONT-SIZE: 95%; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+P.warning {
+	DISPLAY: block; FONT-SIZE: 95%; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+PRE {
+	FONT-SIZE: 95%; FONT-FAMILY: "Courier New", Courier, mono
+}
+UL {
+	LIST-STYLE-POSITION: outside
+}
+OL {
+	LIST-STYLE-POSITION: outside
+}
+.GUITag {
+	FONT-WEIGHT: bold; FONT-SIZE: 95%; FONT-STYLE: normal; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.PropertyName {
+	FONT-STYLE: normal; FONT-FAMILY: "Courier New", Courier, mono
+}
+.GlossaryItem {
+	COLOR: #008080; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+P.RelatedTopics:unknown {
+	content: "Related Topics"
+}
+P.note:unknown {
+	content: "Note:"
+}
+P.warning:unknown {
+	content: "Warning:"
+}

@@ -1,0 +1,2 @@
+Main-Class: actionbazaar.buslogic.BazaarAdminClient
+Class-path: ../build/chapter8/chapter8-ejb.jar

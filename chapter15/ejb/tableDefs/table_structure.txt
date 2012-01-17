@@ -1,0 +1,77 @@
+
+SQL> desc users
+ Name                                      Null?    Type
+ ----------------------------------------- -------- --------------------------
+ USER_ID                                   NOT NULL VARCHAR2(10)
+ FIRST_NAME                                NOT NULL VARCHAR2(40)
+ LAST_NAME                                 NOT NULL VARCHAR2(40)
+ USER_TYPE                                 NOT NULL CHAR(1)
+ BIRTH_DATE                                         DATE
+ USER_BILLING_ID                                    NUMBER(10)
+
+SQL> desc user_details
+ Name                                      Null?    Type
+ ----------------------------------------- -------- --------------------------
+ USER_ID                                            VARCHAR2(10)
+ CREATE_DATE                                        DATE
+ USER_STATUS                                        CHAR(1)
+ PASSWORD                                           VARCHAR2(10)
+ BIRTH_DATE                                         DATE
+ SECRET_WORD                                        VARCHAR2(10)
+
+SQL> desc billing_details
+ Name                                      Null?    Type
+ ----------------------------------------- -------- --------------------------
+ BILLING_ID                                NOT NULL NUMBER(10)
+ ACCOUNT_NO                                         VARCHAR2(32)
+ EXPIRY_DATE                                        VARCHAR2(4)
+ SECRET_CODE                                        VARCHAR2(4)
+
+SQL> desc contact_details
+ Name                                      Null?    Type
+ ----------------------------------------- -------- --------------------------
+ CONTACT_USER_ID                           NOT NULL VARCHAR2(10)
+ EMAIL                                              VARCHAR2(60)
+ PHONE                                              VARCHAR2(60)
+ STREETNAME1                                        VARCHAR2(60)
+ STREETNAME2                                        VARCHAR2(60)
+ CITY                                               VARCHAR2(60)
+ STATE_CODE                                         VARCHAR2(2)
+ ZIP_CODE                                           VARCHAR2(5)
+ COUNTRY                                            VARCHAR2(80)
+
+
+SQL> desc items
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ITEM_ID                                   NOT NULL NUMBER(10)
+ ITEM_NAME                                          VARCHAR2(60)
+ CREATED_DATE                                       DATE
+ SELLER_ID                                          VARCHAR2(10)
+ INITIAL_PRICE                                      NUMBER(20,2)
+ BID_START_DATE                                     DATE
+ BID_END_DATE                                       DATE
+
+SQL> desc category
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CATEGORY_ID                                        NUMBER(10)
+ CATEGORY_NAME                             NOT NULL VARCHAR2(60)
+ CREATE_DATE                                        DATE
+ PARENT_ID                                          NUMBER(10)
+ CREATED_BY                                         VARCHAR2(10)
+
+SQL> desc category_items
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CATEGORY_ID                                        NUMBER(10)
+ ITEM_ID                                            NUMBER(10)
+
+QL> desc bids
+Name                                      Null?    Type
+----------------------------------------- -------- -------------------------
+BID_ID                                    NOT NULL NUMBER(10)
+BID_ITEM_ID                                        NUMBER(10)
+BIDDER                                             VARCHAR2(10)
+BID_PRICE                                          NUMBER(10,2)
+BID_DATE                                           DATE

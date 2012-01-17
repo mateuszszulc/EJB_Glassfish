@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE project [
+    <!ENTITY common SYSTEM "file:./common.xml">
+]>
+
+
+<project name="chapter12" default="all" basedir="." xmlns:oracle="antlib:oracle" >
+
+   <import file="../common.xml"/>
+
+
+	
+	
+	<!-- ****************************************************************
+         ** Creates and deploys all deployable units for the           **
+         ** application.                                               **
+         ** ************************************************************* -->
+    <target name="all" depends="package-app, deploy" description="Creates and deploys all deployable units for the application">
+        <echo message="-----> Creates and deploys all deployable units for the application"/>
+    </target>
+
+	
+    <target name="java-env-check" unless="env.JAVA_HOME">
+        <fail message="JAVA_HOME environment variables must be set."/>
+         <fail message="J2EE_HOME environment variables must be set."/>
+    </target>
+
+    
+	
+    <!-- ******************************************************
+         ** Initialize all properties relevant to the        **
+         ** execution of this how-to demonstration.          **
+         ** *************************************************** -->
+    <target name="init" depends="common,java-env-check" >
+        <echo message="-----> Initializing project properties" />
+    	
+
+        <property name="app.name" value="chapter12" />
+        <property name="ear.name" value="${app.name}" />
+        <property name="web.name" value="${app.name}-web" />
+        <property name="ejb.name" value="${app.name}-ejb" />
+        <property name="context.root" value="${app.name}" />
+        <property name="cli.name" value="${app.name}-client" />
+         
+
+        <property name="src.dir" value="./src" />
+        <property name="bld.dir" value="./build" />
+        <property name="lib.dir" value="./lib" />
+        <property name="etc.dir" value="./etc" />
+        <property name="log.dir" value="./log" />
+
+        <!-- Web Application -->
+        <property name="src.web.dir" value="${src.dir}/web" />
+        <property name="src.web.content.dir" value="${src.dir}/web/content" />
+        <property name="src.web.java.dir" value="${src.dir}/web/java" />
+        <property name="bld.web.dir" value="${bld.dir}/${web.name}" />
+        
+
+    	<!-- EJB Application  -->
+        <property name="src.ejb.dir" value="${src.dir}/ejb/bean" />
+        <property name="src.ejb.cli.dir" value="${src.dir}/ejb/client"/>
+        <property name="bld.ejb.dir" value="${bld.dir}/${ejb.name}/bean" />
+        <property name="bld.ejb.cli.dir" value="${bld.dir}/${ejb.name}/client" />
+
+     
+   
+    	
+        <!-- Web Services (client & server) -->
+        <property name="src.webservice.dir" value="${src.dir}/webservice/server"/>
+        <property name="src.webservice.client.dir" value="${src.dir}/webservice/client"/>
+        <property name="webservice.client.class" value="[template: client application class]"/>
+
+        <property name="bld.ear.dir" value="${bld.dir}/${ear.name}" />
+    	  <property name="bld.cli.dir" value="${bld.dir}/client" />
+        <property name="bld.compiler" value="classic" />
+        <property name="class.files" value="**/*.class" />
+        <property name="bak.files" value="**/*~" />
+
+    </target>
+
+
+
+    <!-- ******************************************************
+         ** Removes the how-to build process artifacts       **
+         ** *************************************************** -->
+    <target name="clean" depends="init" description="Removes the contents of the 'build', 'lib' and others files">
+        <echo message="-----> Removing the contents of the ${bld.dir} and ${lib.dir} directories as well as other miscellaneous files used during the creation of the application"/>
+        <delete dir="${bld.dir}"/>
+        <delete dir="${lib.dir}"/>
+        <delete dir="${log.dir}"/>
+        <delete>
+            <fileset dir="." includes="${bak.files}" defaultexcludes="no"/>
+        </delete>
+    </target>
+
+
+
+    <!-- ****************************************************************
+         ** Sets up required directories and configuration for how-to  **
+         ** ************************************************************* -->
+    <target name="setup" depends="init">
+       <echo message="-----> Creating the required sub-directories" />
+        <mkdir dir="${lib.dir}" />
+        <mkdir dir="${bld.dir}" />
+        <mkdir dir="${log.dir}" />
+        <mkdir dir="${bld.ear.dir}" />
+        <mkdir dir="${bld.ear.dir}/META-INF" />
+        <mkdir dir="${bld.ejb.dir}/META-INF" />
+        <mkdir dir="${bld.web.dir}/WEB-INF/classes" />
+         <mkdir dir="${bld.ejb.cli.dir}/META-INF" />
+    </target>
+
+
+
+    <!--                     APPLICATIONS RELATED TARGETS                   -->
+
+    <!-- ****************************************************************
+         ** Compile all the source and put them into the web dir  **
+         ** ************************************************************* -->
+    <target name="compile-web-classes" depends="setup">
+        <echo message="-----> Compile Web Classes from ${src.web.java.dir}" />
+        <javac  srcdir="${src.web.java.dir}"
+                includes="**/*.java"
+                destdir="${bld.web.dir}/WEB-INF/classes"
+                debug="on">
+            <classpath>
+            <pathelement location="${web.dst.dir}/WEB-INF/classes"/>
+                <pathelement path="${common.j2ee.class.path}"/>
+                  <pathelement location="${bld.ejb.dir}"/>
+
+            </classpath>
+        </javac>
+    </target>
+
+
+
+    <!-- ****************************************************************
+         ** Package the Web Application                                **
+         ** *************************************************************  -->
+    <target name="package-web" depends="compile-web-classes">
+         <war destfile="${bld.ear.dir}/${web.name}.war" webxml="${etc.dir}/web.xml">
+            <fileset dir="${bld.web.dir}" includes="**/*" />
+            <fileset dir="${src.web.content.dir}" includes="**/*" />
+        </war>
+    </target>
+
+        <!-- ****************************************************************
+         ** Package the EAR File                                       **
+         ** *************************************************************  -->
+    <target name="build" depends="package-app" description="Package the application in a ear file">
+	<echo message="Location of the ear file: ${lib.dir}/${app.name}.ear"  />
+    </target>
+
+    <target name="package-app" depends="package-ejb,package-web, ear-descriptor">
+        <jar destfile="${bld.dir}/${app.name}.ear">
+            <fileset dir="${bld.ear.dir}" includes="**" />
+        </jar>
+        <copy file="${bld.dir}/${app.name}.ear" todir="${lib.dir}" />
+    </target>
+
+    <!-- ****************************************************************
+         ** Add OC4J application Descriptor	                                   **
+         ** *************************************************************  -->
+	<target name="ear-descriptor" depends="setup">
+		<copy todir="${bld.ear.dir}/META-INF">
+			<fileset dir="${etc.dir}" includes="application.xml"/>
+		</copy>
+	</target>
+
+
+    <!--              DEPLOYMENT/UNDEPLOYMENT RELATED TARGETS             -->
+
+
+
+
+   
+
+    <!--                    WEB SERVICES RELATED TARGET                   -->
+
+    <!-- ****************************************************************
+         ** Compiles the client application classes                    **
+         ** ************************************************************* -->
+    <target name="cli-classes" depends="setup">
+        <echo message="-----> Compiling the application client module source files"/>
+        <javac srcdir="${src.webservice.client.dir}"
+            destdir="${bld.cli.dir}"
+            debug="on">
+            <classpath>
+                <pathelement path="${common.webservices.class.path}"/>
+                <pathelement location="${bld.cli.dir}"/>
+            </classpath>
+        </javac>
+    </target>
+
+
+   
+    <target name="package-client" depends="compile-cli-classes,cli-descriptor">
+      <jar jarfile="${lib.dir}/${cli.name}.jar" manifest="${etc.dir}/Manifest.mf">
+         <fileset dir="${bld.ejb.cli.dir}" includes="**" />
+       </jar>
+   </target>
+
+
+   
+    <!--       			EJB RELATED TARGET			-->
+
+    <!-- ****************************************************************
+         ** Compile the EJB Classes								       **
+         ** ************************************************************* -->
+     <target name="compile-ejb-classes" depends="setup" >
+        <echo message="-----> Compiling EJBs"/>
+		<javac 	srcdir="${src.ejb.dir}"
+				destdir="${bld.ejb.dir}"
+				debug="on">
+			<classpath>
+				<pathelement path="${common.j2ee.class.path}" />
+	            <pathelement location="${bld.ejb.dir}" />
+	            <pathelement location="${lib.dir}/${ejb.name}.jar" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="compile-cli-classes" depends="setup">
+      <javac srcdir="${src.ejb.cli.dir}"
+             destdir="${bld.ejb.cli.dir}"
+             debug="on">
+         <classpath>
+            <pathelement path="${common.j2ee.class.path}" />
+            <pathelement location="${bld.ejb.cli.dir}" />
+            <pathelement location="${bld.ejb.dir}" />
+         </classpath>
+      </javac>
+   </target>
+
+   <target name="cli-descriptor" depends="setup">
+      <copy todir="${bld.ejb.cli.dir}/META-INF">
+         <fileset dir="${etc.dir}/javase/" includes="persistence.xml"
+         />
+      </copy>
+       <copy todir="${bld.ejb.cli.dir}">
+           <fileset dir="${bld.ejb.dir}" includes="**" excludes="META-INF/persistence.xml" />
+      </copy>
+ 
+ 
+   </target>
+
+
+	
+
+    <!-- ****************************************************************
+         ** Add Descriptor										       **
+         ** ************************************************************* -->
+	<target name="ejb-descriptor" depends="setup">
+		<copy todir="${bld.ejb.dir}/META-INF">
+			<fileset dir="${etc.dir}" includes="ejb-jar.xml, persistence.xml"/>
+		</copy>
+	</target>
+
+
+	<!-- ****************************************************************
+         ** Create EJB jar file									       **
+         ** ************************************************************* -->
+	<target name="package-ejb" depends="compile-ejb-classes,ejb-descriptor">
+        <echo message="-----> Create EJB jar file"/>
+		<jar jarfile="${bld.ear.dir}/${ejb.name}.jar">
+			<fileset dir="${bld.ejb.dir}" includes="**" />
+		</jar>
+           
+	</target>
+
+
+<target name="undeploy"
+          depends="init"
+          unless="ee">
+    <echo message="Undeploying ${app.name} example"
+          level="verbose"></echo>
+    <echo message="${ASADMIN}.bat undeploy --user ${admin.user} --password ${admin.password} --host ${admin.host} --port ${admin.port} chapter5"></echo>
+    <exec executable="${J2EE_HOME}/bin/${ASADMIN}" failonerror="false">
+      <arg line=" undeploy"/>
+      <arg line="--user ${admin.user}"/>
+      <arg line="--host ${admin.host}"/>
+      <arg line="--port ${admin.port}"/>
+      <arg line="chapter12"/>
+    </exec>
+  </target>
+  
+  <target name="deploy"
+          depends="init"
+          unless="ee">
+    <echo message="Deploying ${app.name} example"
+          level="verbose"></echo>
+    <echo message="${ASADMIN}.bat deploy --user ${admin.user} --password ${admin.password} --host ${admin.host} --port ${admin.port} --upload=true  lib/chapter12.ear"></echo>
+    <exec executable="${J2EE_HOME}/bin/${ASADMIN}" failonerror="false">
+      <arg line="deploy"/>
+      <arg line="--user ${admin.user}"/>
+      <arg line="--host ${admin.host}"/>
+      <arg line="--port ${admin.port}"/>
+      <arg line="--upload=true"/>
+      <arg line="lib/chapter12.ear"/>
+    </exec>
+  <echo message="-----> Access the application using:"/>
+        <echo message="    	http://${admin.host}:${http.port}/${context.root}" />
+
+  </target>
+
+  
+  
+  <target name="run-javase" depends="init,package-client">
+        <java classname="actionbazaar.buslogic.PlaceBidBeanJavaSE" fork="yes">
+           <arg value="lib/${cli.name}.jar"/>
+            <classpath>
+             <pathelement path="${common.j2ee.class.path}" />
+             
+              <pathelement location="${lib.dir}/${cli.name}.jar"/> 
+                      
+           </classpath>
+        </java>
+    </target>
+</project>

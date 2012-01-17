@@ -1,0 +1,2 @@
+Main-Class: actionbazaar.buslogic.PlaceBidClient
+Class-path: ../build/chapter5/chapter5-ejb.jar

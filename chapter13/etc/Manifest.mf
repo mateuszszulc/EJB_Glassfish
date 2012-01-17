@@ -1,0 +1,2 @@
+Main-Class: actionbazaar.buslogic.PlaceOrderClient
+Class-path: ../build/chapter13/chapter13-ejb.jar

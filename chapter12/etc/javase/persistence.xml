@@ -1,0 +1,21 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0"> <persistence-unit name="actionBazaar" transaction-type="RESOURCE_LOCAL">
+        <class>actionbazaar.persistence.Bid</class>
+        <class>actionbazaar.persistence.Item</class>
+        <class>actionbazaar.persistence.User</class>
+	  <class>actionbazaar.persistence.Bidder</class>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+            <properties>
+      		<property name = "toplink.ddl-generation"
+                					value = "create-tables"/>  
+      		<property name = "toplink.ddl-generation.output-mode" value = "database"/>                 
+ 
+            <property name="toplink.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+            <property name="toplink.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+            <property name="toplink.jdbc.user" value="ab"/>
+            <property name="toplink.jdbc.password" value="ab"/>
+            <!-- enable this property to see SQL and other logging -->
+            <property name="toplink.logging.level" value="FINE"/> 
+ 
+        </properties>
+    </persistence-unit>
+</persistence>

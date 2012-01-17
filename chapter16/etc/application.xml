@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<application version="5" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_5.xsd">
+<module>
+       <web>
+         <web-uri>chapter16-web.war</web-uri>
+         <context-root>/chapter16</context-root>
+      </web>
+</module>
+<module>
+       <ejb>
+         chapter16-ejb.jar
+       </ejb>
+</module>
+</application>

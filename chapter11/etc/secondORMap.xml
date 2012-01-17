@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_1_0.xsd"
+    version="1.0">
+
+  <persistence-unit-metadata>
+    <persistence-unit-defaults>                                     
+      <schema>ab</schema>
+      <access>PROPERTY</access>
+        <entity-listeners>                                          
+          <entity-listener
+            class = "actionbazaar.persistence.DefaultListener">
+          </entity-listener>
+        </entity-listeners>
+    </persistence-unit-defaults>
+  </persistence-unit-metadata>
+
+  <package>actionbazaar.persistence</package>
+  <access>PROPERTY</access>
+
+  <named-query name = "findAllCategories">
+    <query>SELECT c FROM Category AS c</query>
+    <hint name = "refresh" value = "true"/>
+  </named-query>
+
+  <entity name = "Category" class = "Category" metadata-complete = "false">                     
+    <table name = "CATEGORIES" />
+    <sequence-generator name = "CATEGORY_SEQ_GEN" 
+                        sequence-name = "CATEGORY_SEQ"
+                        allocation-size = "1"
+                        initial-value = "1"/> 
+    <exclude-default-listeners/>
+    <exclude-superclass-listeners/>
+    <attributes>
+      <id name = "categoryId">
+        <column name = "CATEGORY_ID"/>
+        <generated-value strategy = "SEQUENCE" 
+                         generator = "CATEGORY_SEQ_GEN"/>
+      </id>
+      <basic name = "categoryName">
+        <column name = "CATEGORY_NAME"/>
+      </basic>
+      <basic name = "createDate">
+        <column name = "CREATE_DATE"/>
+      </basic>
+      <many-to-many name = "items" target-entity = "Item">
+          <join-table name = "CATEGORY_ITEMS">
+          <join-column name = "CATEGORY_ID" 
+                       referenced-column-name = "CATEGORY_ID"/>
+          <inverse-join-column name = "ITEM_ID" 
+                               referenced-column-name = "ITEM_ID"/>
+        </join-table>
+      </many-to-many>
+    </attributes>
+  </entity>
+</entity-mappings>

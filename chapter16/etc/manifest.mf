@@ -1,0 +1,2 @@
+Manifest-Version: 1.0
+Main-Class: oracle.ejb30.HelloClient

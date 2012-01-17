@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>How-To Develop a Message Driven Bean using EJB 3.0</title>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+  <link href="blaf.css" type=text/css rel=stylesheet>
+</head>
+
+<body>
+
+<h1>How-To Develop a Message Driven Bean using EJB 3.0</h1>
+<p><b>Date: 1/18/05<br>
+  Author: Debu Panda </b></p>
+<ul>
+  <li><a href="#introduction">Introduction </a>
+    <ul>
+      <li><a href="#slsb">Message Driven  Bean example 
+        using EJB 3.0</font> </a></li>
+      <li><a href="#client">Sample EJB Client</a></li>
+    </ul>
+  </li>
+  <li><a href="#prerequisites">Prerequisites</font></a> 
+    <ul>
+      <li><a href="#know">What you need to know</font></a></li>
+      <li><a href="#requirements">Software requirements</font></a></li>
+      <li><a href="#notations">Notations</font></a></li>
+
+    </ul>
+  </li>
+
+  <li><a href="#learn">Building the Application</font></a></li>
+  <li><a href="#application">Running the Application</font></a> 
+    <ul>
+      <li><a href="#distribution">Examine the Sample File 
+        Directories </font></a></li>
+      <li><a href="#setup">Configure the Environment</font></a></li>
+      <li><a href="#oc4j">Start the Server </a></li>
+      <li><a href="#compiling">Generate, Compile and Deploy 
+        the Application</font></a></li>
+
+      <li><a href="#running">Run the application</font></a></li>
+    </ul>
+  </li>
+  <li><a href="#summary">Summary</a></li>
+</ul>
+
+<h2><a name="introduction"></a>Introduction</h2>
+
+<p> This example</font> application  
+  demonstrates</font> Oracle's support for the</font> EJB 
+  3.0 specification for a Message Driven Bean and 
+  dependency injection of EJBContext and creation of a Timer from the injected EJBContext. </p>
+
+<p> EJB 3.0 greatly simplifies the</font> development of 
+  EJBs, removing many complex development tasks.  For an MDB,</font> 
+  the bean class do not have</font> 
+  to implement the<strong> javax.ejb.MessageDrivenBean</strong> interface and do not have to implement the lifecycle methods and you longer require a deployment descriptor to specify the message destination and factory information. </p>
+<p>The <strong>MessageDrivenContext</strong> for the MDB can be achieved using dependency injection. </p>
+<h3 class=MsoNormal style="MARGIN: 0in 0in 0pt"><a name="slsb"></a>Message Driven 
+  Bean example</font> using EJB 3.0 </h3>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt">The following 
+  is  the bean class for the MessageLogger
+  MDB.  
+  N</font>ote that this is a&nbsp;pure Java class &nbsp;and <s></font></s>does not implement <strong>javax.ejb.MessageDrivenBean</strong>.&nbsp; </P>
+
+
+<blockquote>
+<P class=code><strong>@MessageDriven</strong>(
+    activationConfig = {
+        <strong>@ActivationConfigProperty</strong>(propertyName="connectionFactoryJndiName",propertyValue="jms/TopicConnectionFactory"),
+        @ActivationConfigProperty(propertyName="destinationName", propertyValue="jms/demoTopic"),
+        @ActivationConfigProperty(propertyName="destinationType", propertyValue="javax.jms.Topic"),
+        @ActivationConfigProperty(propertyName="messageSelector", propertyValue="RECIPIENT = 'MDB'")
+
+    }
+)
+
+<br>
+ public class MessageLogger implements  TimedObject
+  {
+<br>
+<br> 
+<strong>@Resource javax.ejb.MessageDrivenContext mc</strong>;
+    
+<br>
+	public void onMessage(Message message)
+	<br>  {
+		<br>  System.out.println("onMessage() - " + message);
+            <br>    try
+        		<br>  {
+  <br>
+	  <br>      	 String subject = message.getStringProperty("subject");
+		  <br> 	   String inmessage = message.getStringProperty("message");
+		  
+<br>
+                     <strong>TimerService ts = mc.getTimerService();
+                     </strong><br>
+				  Timer timer = ts.createTimer(30000, subject);
+   		           <br>                 }
+                ...
+</p>
+
+
+
+<p>Note that the bean uses 
+  the</font> <strong>@MessageDriven</strong> annotation</font> 
+  to mark the bean  as</font> a Stateless EJB.</font> 
+  </font><strong>@ActivationConfig </strong>can 
+  be used to specify the various messaging system properties like the message destination, type, etc. You can override these properties by specifying these in the deployment descriptor. </P>
+<p>Instead of defining a <strong>setMessageDrivenContext () </strong>method to get the MessageDrivenConext, itis injected by using the <strong>@Resource</strong> annotation. Then TimerService is invoked from the injected MessageDrivenContext to create a Timer. </P> 
+<h3 class=MsoNormal 
+style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none">&nbsp;</h3>
+<h3 class=MsoNormal 
+style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><a name="client"></a>Sample</font> 
+  JMS Client </h3>
+<P class=MsoNormal 
+style="MARGIN: 0in 0in 0pt; mso-layout-grid-align: none"><SPAN 
+style="mso-bidi-font-size: 10.0pt">The Sample JMS client uses JMS 1.1 API to send a message to the destination on which the MDB is listening on. The MDB gets activated after the message arrives on the message destination and then creates the timer. </SPAN><br>
+</P>
+<blockquote>&nbsp;</blockquote>
+<h2><a name="prerequisites"></a><s></font></s> 
+  Prerequisites</h2>
+
+<h3><a name="know"></a>What you need to </font>know</h3>
+In order to complete the example application, you should 
+be familiar with the following:<ul><li>EJB 3.0</font></li>
+</ul>
+<p>For further information on EJB 3.0, see the following 
+  documents on OTN:</font></p>
+<ul>
+  <li>Link to other <a href="http://www.oracle.com/technology/tech/java/oc4j/ejb3"> 
+    EJB 3.0 Howto's on OTN</a> </li>
+  <li>EJB 3.0 Early Draft Release 2 Specification from<a href="http://java.sun.com/products/ejb/docs.html"> Sun Web Site</a></li>
+</ul>
+
+<h3><a name="requirements"></a></font>Software 
+  Requirements</h3>
+
+<p> This demonstration</font> requires that the following 
+  soft</font>ware components are installed and configured 
+  correctly:</p>
+   
+<ul>
+    <li><a href="http://www.oracle.com/technology/tech/java/oc4j/ejb3/">
+	Oracle Application Server 10g 10.1.3</a></li>
+    
+    <li>Sun's JDK version</font> 1.5 or above, available <s></font></s> 
+    <a href="http://java.sun.com/j2se/">here</a> </li>
+  <li>Any HTML browser like Mozilla, Microsoft Internet Explorer, Netscape,
+        etc.
+  </li>
+</ul>
+
+<h3><a name="notations"></a>Notations</h3>
+
+<ul>
+  <li><b>%ORACLE_HOME%</b> - The directory where you installed Oracle's EJB 3.0 container. 
+  <li><b>%JAVA_HOME%</b> - The directory where your JDK is installed</li>
+  <li><b>%HOWTO_HOME%</b> - The directory where this demo is unzipped</li>
+</ul>
+
+<h2><a name="learn" id="learn"></a></font>Building</font> 
+  the Application</h2>
+
+<p>  The Javadoc<s></font></s> for</font> this application  is located in the </font> 
+  <b>%HOWTO_HOME%/doc/javadoc/</b> directory. </font></p>
+
+<p> The <s></font></s>configuration files are 
+  located in the <b>%HOWTO_HOME%/etc</b> directory, including</font> 
+  deployment descriptor files 
+  such as</font> application.xml.<s></font></s></p>
+
+<h2><a name="application" id="application"></a><s></font></s>Running</font> the Application</h2>
+
+<p> To run the sample application on a standalone instance 
+  of OracleAS EJB 3.0 Container, follow these steps:</font></p>
+
+<h3><a name="distribution" id="distribution"></a>1. Examine 
+  the Sample File Directories</font></h3>
+
+<ul>
+<li><b>build</b> - temporary directory created during the build</li>
+<li><b>log</b> - temporary directory holding build/deploy logs</li>
+<li><b>etc</b> - all necessary files to package the application</li>
+  <li><b>lib</b> - holds the application archives that could be deployed    </li>
+<li><b>doc</b> - the How-to document and Javadoc's</li>
+  <ul>
+    <li><b>javadoc</b> - the javadoc of the different source files
+    <li><b>how-to-ejb30-mdb.html</b> - this How-to page
+  </ul>
+<li><b>src</b> - the source of the demo
+  <ul>
+    <li><b>ejb</b> - contains the sample MDB code
+    <li><strong>client</strong> - contains application client code 
+  </ul>
+</ul>
+
+<h3><a name="setup" id="setup"></a>2. Configure the Environment</font></h3>
+
+<h4><s><a name="envconfig"></a></s></h4>
+
+<p> Ensure</font> 
+  the following environment variables are defined:</font></p>
+
+<ul>
+  <li><b>%ORACLE_HOME%</b> - The directory where you installed OC4J. 
+  <li><b>%JAVA_HOME%</b> - The directory where you installed 
+    the JDK</font></li>
+  <li><b>%PATH%</b> - includes <b>%ORACLE_HOME%</b> /ant/bin </li>
+</ul>
+
+<h4>&nbsp;</h4>
+
+<h3><a name="oc4j" id="oc4j"></a>3. Start the Server </h3>
+
+<p>An Oracle Application Server 10g 10.1.3  must 
+  be running. Start the  
+  container using the following command:</font></p>
+<ul>
+  <blockquote>
+    <p class="CODE">%ORACLE_HOME%/bin/oc4j -start</font> 
+    </p>
+  </blockquote>
+</ul>
+<p>&nbsp; </p>
+<h3><a name=compiling id="compiling"></a>4. Generate, Compile, 
+  and Deploy</font> the Application</h3>
+
+<p> Ensure <strong>$ORACLE_HOME/ant/bin</strong> is included in your <strong>PATH</strong> environment variable.  On some operating systems,</font> Ant does not currently 
+  support the use of environment variables. If this is the case for your operating 
+  system, please modify the common.xml file located in the  
+  %HOWTO_HOME% directory. </p>
+
+<p> Edit ant-oracle.properties (in the demo<s> </font></s>directory) and <s></font></s> en</font>sure 
+  the following properties are set to the correct values, 
+  as indicated below:</font><br>
+<ul>
+  <li><b>oc4j.host</b>: host where 
+    OC4J is running <s></font></s> (default localhost)</li>
+  <li><b>oc4j.admin.port</b>: RMI port number  
+    (default 23791)</li>
+  <li><b>oc4j.admin.user</b>: admin user name (default oc4jadmin)</li>
+  <li><b>oc4j.admin.password</b>: admin user password (default welcome)</li>
+  <li><b>oc4j.binding.module</b>: website name where deployed web modules
+      are bound (default http-web-site)</li>
+</ul>
+<p></p>
+
+<h4>&nbsp;</h4>
+
+<p>To build the application, type the following command 
+  from the  <b>%HOWTO_HOME%</b> directory:</font></p>
+<blockquote>
+  <p class="CODE">ant</font></p>
+</blockquote>
+<p>
+You should now have the newly created <b>ejb30mdb.ear</b> in your
+<b>%HOWTO_HOME%/lib</b> directory. <br>
+</p>
+<p>
+This command would also attempt to deploy the application if the build is
+successful.  It will first test whether OC4J is running.
+</p>
+
+<p> Note that y</font>ou can also deploy the application 
+  separately . 
+  En</font>sure the <b>%ORACLE_HOME%</b> environment variable is defined, 
+  and from</font> the <b>%HOWTO_HOME%</b> 
+  directory, type the command:<br>
+</p>
+<blockquote>
+  <p class="CODE">ant deploy</font></p>
+</blockquote>
+<h3><a name=running id="running"></a>5. </font>Run 
+  the Application</h3>
+
+<p>Run 
+  the sample by providing the following command, including a name as the program 
+  argument:</font></p>
+<blockquote>
+  <p class="code">ant run</font></p>
+</blockquote>
+<p> Return <s></font></s> 
+  to the console where you started OC4J and you will see output generated by 
+  the MDB. </font></p>
+
+<h2><a name=summary></a>Summary</h2>
+
+<p> In this document, you should have learned how to</font>: 
+</p>
+
+<ul>
+  <li>Develop</font> a Simple Message Driven Bean using EJB 
+  3.0 and how to use dependency injection to inject EJBContext </li>
+  <li>Deploy</font> a Simple MDB in 
+    the</font> Oracle Application Server 10g 10.1.3 container </li>
+</ul>
+<p></p>
+
+</body>
+</html>
+
+

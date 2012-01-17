@@ -1,0 +1,6 @@
+<persistence>
+ <persistence-unit name="actionBazaar">
+<jta-data-source>jdbc/ActionBazaarDS</jta-data-source>
+
+</persistence-unit>
+</persistence>

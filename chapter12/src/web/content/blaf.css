@@ -1,0 +1,111 @@
+A:link {
+	COLOR: #663300; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+A:active {
+	COLOR: #ff6600; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+A:visited {
+	COLOR: #996633; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+A.navigation:link {
+	FONT-SIZE: 65%; COLOR: #996633; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+A.navigation:active {
+	FONT-SIZE: 65%; COLOR: #996633; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+A.navigation:visited {
+	FONT-SIZE: 65%; COLOR: #996633; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+BODY {
+	FONT-SIZE: 11pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+P {
+	FONT-SIZE: 11pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+LI {
+	FONT-SIZE: 11pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+UL {
+	FONT-SIZE: 11pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+OL {
+	FONT-SIZE: 11pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+H1 {
+	BORDER-RIGHT: #cccc99 0px solid; BORDER-TOP: #cccc99 0px solid; FONT-SIZE: 170%; BORDER-LEFT: #cccc99 0px solid; WIDTH: 100%; COLOR: #336699; BORDER-BOTTOM: #cccc99 2px solid; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+H2 {
+	BORDER-RIGHT: #cccc99 0px solid; BORDER-TOP: #cccc99 0px solid; FONT-SIZE: 130%; BORDER-LEFT: #cccc99 0px solid; WIDTH: 100%; COLOR: #336699; BORDER-BOTTOM: #cccc99 2px solid; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+H3 {
+	FONT-SIZE: 110%; WIDTH: 100%; COLOR: #336699; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+H4 {
+	FONT-WEIGHT: bold; FONT-SIZE: 11pt; WIDTH: 100%; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+.CODE {
+	COLOR: #336699; FONT-FAMILY: "Courier New", "Courier", "monospace"
+}
+CODE.nocolor {
+	FONT-FAMILY: "Courier New", "Courier", "monospace"
+}
+P.indent {
+	TEXT-INDENT: 9%
+}
+TABLE.borders {
+	BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none
+}
+TR {
+	VERTICAL-ALIGN: top; TEXT-ALIGN: left
+}
+TH {
+	FONT-WEIGHT: bold; FONT-SIZE: 11pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+TD {
+	FONT-SIZE: 11pt; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+.mediumtext {
+	FONT-SIZE: 80%
+}
+.smalltext {
+	FONT-SIZE: 75%
+}
+.tinytext {
+	FONT-SIZE: 70%
+}
+P.RelatedTopics {
+	DISPLAY: block; FONT-WEIGHT: bold; FONT-SIZE: 125%; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif; BACKGROUND-COLOR: #ffffcc
+}
+P.note {
+	DISPLAY: block; FONT-SIZE: 95%; FONT-STYLE: italic; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+P.warning {
+	DISPLAY: block; FONT-SIZE: 95%; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+PRE {
+	FONT-SIZE: 95%; FONT-FAMILY: "Courier New", Courier, mono
+}
+UL {
+	LIST-STYLE-POSITION: outside
+}
+OL {
+	LIST-STYLE-POSITION: outside
+}
+.GUITag {
+	FONT-WEIGHT: bold; FONT-SIZE: 95%; FONT-STYLE: normal; FONT-FAMILY: Arial, Helvetica, Geneva, sans-serif
+}
+.PropertyName {
+	FONT-STYLE: normal; FONT-FAMILY: "Courier New", Courier, mono
+}
+.GlossaryItem {
+	COLOR: #008080; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+P.RelatedTopics:unknown {
+	content: "Related Topics"
+}
+P.note:unknown {
+	content: "Note:  "
+}
+P.warning:unknown {
+	content: "Warning:  "
+}

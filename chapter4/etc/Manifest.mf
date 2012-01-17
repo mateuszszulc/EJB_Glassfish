@@ -1,0 +1,2 @@
+Main-Class: actionbazaar.buslogic.ShippingRequestJMSProducer
+Class-path: ../build/chapter4/chapter4-ejb.jar

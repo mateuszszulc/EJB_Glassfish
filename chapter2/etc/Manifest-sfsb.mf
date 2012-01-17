@@ -1,0 +1,2 @@
+Main-Class: ejb3inaction.example.buslogic.PlaceOrderClient
+Class-path: ../build/chapter2/chapter2-ejb.jar
